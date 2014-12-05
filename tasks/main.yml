@@ -23,6 +23,32 @@
   notify: Restart haproxy
   tags: haproxy
 
+- name: Create error files directory
+  file: >
+    path=/etc/haproxy/errors
+    owner=root
+    group=root
+    mode=0755
+    state=directory
+  tags: haproxy
+
+- name: Create error files
+  template: >
+    src={{ item }}.http.j2
+    dest=/etc/haproxy/errors/{{ item }}.http
+    owner=root
+    group=root
+    mode=0644
+  with_items:
+    - 400
+    - 403
+    - 408
+    - 500
+    - 502
+    - 503
+    - 504
+  tags: haproxy
+
 - name: Start haproxy and enable on boot
   service: name=haproxy state=started enabled=yes
   tags: haproxy
