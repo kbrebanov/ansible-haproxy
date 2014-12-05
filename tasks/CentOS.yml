@@ -1,2 +1,6 @@
 ---
 # tasks file for haproxy (CentOS specific)
+
+- name: Install haproxy package
+  yum: name=haproxy state=present
+  tags: haproxy
