@@ -1,0 +1,6 @@
+---
+# tasks file for haproxy (Ubuntu specific)
+
+- name: Install haproxy package
+  apt: name=haproxy state=present update_cache=yes
+  tags: haproxy

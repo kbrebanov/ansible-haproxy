@@ -1,2 +1,28 @@
 ---
 # tasks file for haproxy
+
+- name: Include distribution specific variables
+  include_vars: "{{ ansible_distribution }}.yml"
+  tags: haproxy
+
+- include: CentOS.yml
+  when: ansible_distribution == "CentOS"
+  tags: haproxy
+
+- include: Ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+  tags: haproxy
+
+- name: Create haproxy configuration file
+  template: >
+    src=haproxy.cfg.j2
+    dest=/etc/haproxy/haproxy.cfg
+    owner=root
+    group=root
+    mode=0644
+  notify: Restart haproxy
+  tags: haproxy
+
+- name: Start haproxy and enable on boot
+  service: name=haproxy state=started enabled=yes
+  tags: haproxy
