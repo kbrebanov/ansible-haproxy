@@ -1,2 +1,5 @@
 ---
 # vars file for haproxy (Ubuntu specific)
+
+haproxy_packages:
+  - haproxy={{ haproxy_version }}*

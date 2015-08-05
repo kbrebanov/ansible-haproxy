@@ -23,4 +23,4 @@ defaults
         errorfile 503 {{ haproxy_defaults_errorfile_503 }}
         errorfile 504 {{ haproxy_defaults_errorfile_504 }}
 
-listen {{ haproxy_listen_name }} {{ haproxy_listen_address }}:{{ haproxy_listen_port }}
+listen http_proxy 0.0.0.0:80

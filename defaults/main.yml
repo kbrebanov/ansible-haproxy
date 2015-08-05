@@ -1,23 +1,9 @@
 ---
 # defaults file for haproxy
 
-haproxy_global_chroot: /var/lib/haproxy
-haproxy_global_user: haproxy
-haproxy_global_group: haproxy
+haproxy_version: 1.5.14
 
-haproxy_defaults_log: global
 haproxy_defaults_mode: http
 haproxy_defaults_timeout_connect: 5000
 haproxy_defaults_timeout_client: 50000
 haproxy_defaults_timeout_server: 50000
-haproxy_defaults_errorfile_400: /etc/haproxy/errors/400.http
-haproxy_defaults_errorfile_403: /etc/haproxy/errors/403.http
-haproxy_defaults_errorfile_408: /etc/haproxy/errors/408.http
-haproxy_defaults_errorfile_500: /etc/haproxy/errors/500.http
-haproxy_defaults_errorfile_502: /etc/haproxy/errors/502.http
-haproxy_defaults_errorfile_503: /etc/haproxy/errors/503.http
-haproxy_defaults_errorfile_504: /etc/haproxy/errors/504.http
-
-haproxy_listen_name: http_proxy
-haproxy_listen_address: 0.0.0.0
-haproxy_listen_port: 80
