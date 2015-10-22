@@ -1,7 +1,7 @@
 ---
 # defaults file for haproxy
 
-haproxy_version: 1.5.14
+haproxy_version: 1.6.1
 
 haproxy_defaults_mode: http
 haproxy_defaults_timeout_connect: 5000

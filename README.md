@@ -13,7 +13,7 @@ Role Variables
 
 | Name                             | Default    | Description                                                          |
 |----------------------------------|------------|----------------------------------------------------------------------|
-| haproxy_version                  | 1.5.14     | Version of HAProxy to install                                        |
+| haproxy_version                  | 1.6.1      | Version of HAProxy to install                                        |
 | haproxy_defaults_mode            | http       | Running mode or protocol of the instance                             |
 | haproxy_defaults_timeout_connect | 5000       | Maximum time to wait for a connection attempt to a server to succeed |
 | haproxy_defaults_timeout_client  | 50000      | Maximum inactivity time on the client side                           |
@@ -31,7 +31,16 @@ Install HAProxy
 ```
 - hosts: all
   roles:
-    - { role: kbrebanov.haproxy }
+    - kbrebanov.haproxy
+```
+
+Install older version of HAProxy
+```
+- hosts: all
+  vars:
+    haproxy_version: 1.5.14
+  roles:
+    - kbrebanov.haproxy
 ```
 
 License

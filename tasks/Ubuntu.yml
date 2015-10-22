@@ -14,6 +14,12 @@
     state=present
   tags: haproxy
 
+- name: Add HAProxy 1.6 PPA
+  apt_repository: >
+    repo='ppa:vbernat/haproxy-1.6'
+    state=present
+  tags: haproxy
+
 - name: Install HAProxy packages
   apt: name={{ item }} state=present update_cache=yes
   with_items: haproxy_packages
