@@ -3,7 +3,13 @@
 
 haproxy_version: 1.6.1
 
+haproxy_global_daemon: true
+
+haproxy_defaults_log: global
 haproxy_defaults_mode: http
+haproxy_defaults_option_dontlognull: true
+haproxy_defaults_option_httplog: true
+haproxy_defaults_option_httplog_clf: false
 haproxy_defaults_timeout_connect: 5000
 haproxy_defaults_timeout_client: 50000
 haproxy_defaults_timeout_server: 50000

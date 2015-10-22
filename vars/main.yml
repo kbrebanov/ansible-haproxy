@@ -1,7 +1,9 @@
 ---
 # vars file for haproxy
 
+haproxy_global_ca_base: /etc/ssl/certs
 haproxy_global_chroot: /var/lib/haproxy
+haproxy_global_crt_base: /etc/ssl/private
 haproxy_global_user: haproxy
 haproxy_global_group: haproxy
 
