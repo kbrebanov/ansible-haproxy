@@ -1,6 +1,8 @@
 haproxy
 =======
 
+[![Ansible Role](https://img.shields.io/ansible/role/5700.svg)](https://galaxy.ansible.com/list#/roles/5700)
+
 Installs and configures HAProxy
 
 Requirements
