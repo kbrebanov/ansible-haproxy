@@ -12,6 +12,7 @@ global
 {% if haproxy_global_daemon %}
         daemon
 {% endif %}
+        maxconn {{ haproxy_global_maxconn }}
 
         # Default SSL material locations
         ca-base {{ haproxy_global_ca_base }}
@@ -47,3 +48,26 @@ defaults
         errorfile 502 {{ haproxy_defaults_errorfile_502 }}
         errorfile 503 {{ haproxy_defaults_errorfile_503 }}
         errorfile 504 {{ haproxy_defaults_errorfile_504 }}
+
+{% if haproxy_listen_section %}
+listen {{ haproxy_listen_name }}
+        bind {{ haproxy_listen_bind }}
+{% if haproxy_listen_balance_algorithm %}
+{% if haproxy_listen_balance_arguments %}
+        balance {{ haproxy_listen_balance_algorithm }} {{ haproxy_listen_balance_arguments }}
+{% else %}
+        balance {{ haproxy_listen_balance_algorithm }}
+{% endif %}
+{% endif %}
+{% if haproxy_listen_mode %}
+        mode {{ haproxy_listen_mode }}
+{% endif %}
+{% if haproxy_listen_log %}
+        log {{ haproxy_listen_log }}
+{% endif %}
+{% if haproxy_listen_servers %}
+{% for server in haproxy_listen_servers %}
+        server {{ server.name }} {{ server.address }}
+{% endfor %}
+{% endif %}
+{% endif %}

@@ -13,7 +13,7 @@ haproxy_global_log:
     length: ''
     facility: local1
     level: notice
-
+haproxy_global_maxconn: 2000
 haproxy_global_ssl_default_bind_ciphers:
   - "ECDH+AESGCM"
   - "DH+AESGCM"
@@ -41,3 +41,12 @@ haproxy_defaults_option_httplog_clf: false
 haproxy_defaults_timeout_connect: 5000
 haproxy_defaults_timeout_client: 50000
 haproxy_defaults_timeout_server: 50000
+
+haproxy_listen_section: false
+haproxy_listen_name: ''
+haproxy_listen_bind: ''
+haproxy_listen_balance_algorithm: ''
+haproxy_listen_balance_arguments: ''
+haproxy_listen_mode: ''
+haproxy_listen_log: ''
+haproxy_listen_servers: []
