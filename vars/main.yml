@@ -6,6 +6,8 @@ haproxy_global_chroot: /var/lib/haproxy
 haproxy_global_crt_base: /etc/ssl/private
 haproxy_global_user: haproxy
 haproxy_global_group: haproxy
+haproxy_global_stats_socket_path: /run/haproxy/admin.sock
+haproxy_global_stats_socket_params: mode 660 level admin
 
 haproxy_defaults_errorfile_400: /etc/haproxy/errors/400.http
 haproxy_defaults_errorfile_403: /etc/haproxy/errors/403.http

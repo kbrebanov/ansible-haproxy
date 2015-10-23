@@ -1,46 +1,49 @@
 # {{ ansible_managed }}
+
 global
-	      log /dev/log	local0
-	      log /dev/log	local1 notice
-	      chroot {{ haproxy_global_chroot }}
-	      stats socket /run/haproxy/admin.sock mode 660 level admin
-	      stats timeout 30s
-	      user {{ haproxy_global_user }}
-	      group {{ haproxy_global_group }}
+{% for log in haproxy_global_log %}
+        log {{ log.address }} {{ log.length|default(omit) }} {{ log.facility }} {{ log.level|default(omit) }}
+{% endfor %}
+        chroot {{ haproxy_global_chroot }}
+        stats socket {{ haproxy_global_stats_socket_path }} {{ haproxy_global_stats_socket_params }}
+        stats timeout {{ haproxy_global_stats_timeout }}
+        user {{ haproxy_global_user }}
+        group {{ haproxy_global_group }}
 {% if haproxy_global_daemon %}
-	      daemon
+        daemon
 {% endif %}
 
-	      # Default SSL material locations
-	      ca-base {{ haproxy_global_ca_base }}
-      	crt-base {{ haproxy_global_crt_base }}
+        # Default SSL material locations
+        ca-base {{ haproxy_global_ca_base }}
+        crt-base {{ haproxy_global_crt_base }}
 
-      	# For more information, see ciphers(1SSL). This list is from:
-      	#  https://hynek.me/articles/hardening-your-web-servers-ssl-ciphers/
-      	ssl-default-bind-ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS
-      	ssl-default-bind-options no-sslv3
+        # For more information, see ciphers(1SSL). This list is from:
+        #  https://hynek.me/articles/hardening-your-web-servers-ssl-ciphers/
+        ssl-default-bind-ciphers {{ haproxy_global_ssl_default_bind_ciphers | join(":") }}
+        ssl-default-bind-options {{ haproxy_global_ssl_default_bind_options | join(" ") }}
 
 defaults
-      	log	{{ haproxy_defaults_log }}
-      	mode {{ haproxy_defaults_mode }}
-{% if haproxy_defaults_option_httplog and not haproxy_defaults_option_httplog_clf %}
-      	option httplog
-{% endif %}
-{% if haproxy_defaults_option_httplog and haproxy_defaults_option_httplog_clf %}
+        log {{ haproxy_defaults_log }}
+        mode {{ haproxy_defaults_mode }}
+{% if haproxy_defaults_option_httplog %}
+{% if haproxy_defaults_option_httplog_clf %}
         option httplog clf
+{% else %}
+        option httplog
+{% endif %}
 {% endif %}
 {% if haproxy_defaults_option_dontlognull %}
-      	option dontlognull
+        option dontlognull
 {% else %}
         no option dontlognull
 {% endif %}
         timeout connect {{ haproxy_defaults_timeout_connect }}
         timeout client {{ haproxy_defaults_timeout_client }}
         timeout server {{ haproxy_defaults_timeout_server }}
-      	errorfile 400 {{ haproxy_defaults_errorfile_400 }}
-      	errorfile 403 {{ haproxy_defaults_errorfile_403 }}
-      	errorfile 408 {{ haproxy_defaults_errorfile_408 }}
-      	errorfile 500 {{ haproxy_defaults_errorfile_500 }}
-      	errorfile 502 {{ haproxy_defaults_errorfile_502 }}
-      	errorfile 503 {{ haproxy_defaults_errorfile_503 }}
-      	errorfile 504 {{ haproxy_defaults_errorfile_504 }}
+        errorfile 400 {{ haproxy_defaults_errorfile_400 }}
+        errorfile 403 {{ haproxy_defaults_errorfile_403 }}
+        errorfile 408 {{ haproxy_defaults_errorfile_408 }}
+        errorfile 500 {{ haproxy_defaults_errorfile_500 }}
+        errorfile 502 {{ haproxy_defaults_errorfile_502 }}
+        errorfile 503 {{ haproxy_defaults_errorfile_503 }}
+        errorfile 504 {{ haproxy_defaults_errorfile_504 }}

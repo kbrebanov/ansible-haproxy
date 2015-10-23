@@ -20,7 +20,7 @@
     owner=root
     group=root
     mode=0644
-  notify: Restart haproxy
+  notify: reload haproxy
   tags: haproxy
 
 - name: Create error files directory
@@ -49,6 +49,6 @@
     - 504
   tags: haproxy
 
-- name: Start haproxy and enable on boot
-  service: name=haproxy state=started enabled=yes
+- name: Ensure HAProxy service is started and enabled on boot
+  service: name={{ haproxy_service_name }} state=started enabled=yes
   tags: haproxy

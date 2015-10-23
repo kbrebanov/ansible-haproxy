@@ -4,6 +4,34 @@
 haproxy_version: 1.6.1
 
 haproxy_global_daemon: true
+haproxy_global_log:
+  - address: /dev/log
+    length: ''
+    facility: local0
+    level: ''
+  - address: /dev/log
+    length: ''
+    facility: local1
+    level: notice
+
+haproxy_global_ssl_default_bind_ciphers:
+  - "ECDH+AESGCM"
+  - "DH+AESGCM"
+  - "ECDH+AES256"
+  - "DH+AES256"
+  - "ECDH+AES128"
+  - "DH+AES"
+  - "ECDH+3DES"
+  - "DH+3DES"
+  - "RSA+AESGCM"
+  - "RSA+AES"
+  - "RSA+3DES"
+  - "!aNULL"
+  - "!MD5"
+  - "!DSS"
+haproxy_global_ssl_default_bind_options:
+  - no-sslv3
+haproxy_global_stats_timeout: 10s
 
 haproxy_defaults_log: global
 haproxy_defaults_mode: http
