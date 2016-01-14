@@ -15,7 +15,7 @@ Role Variables
 
 | Name                                    | Default                                                                                                                                                                  | Description                                                                                                               |
 |-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
-| haproxy_version                         | 1.6.1                                                                                                                                                                    | Version of HAProxy to install                                                                                             |
+| haproxy_version                         | 1.6                                                                                                                                                                      | Version of HAProxy to install                                                                                             |
 | haproxy_global_daemon                   | true                                                                                                                                                                     | Makes the process fork in the background                                                                                  |
 | haproxy_global_log                      | [{address: /dev/log, length: '', facility: local0, level: ''}, {address: /dev/log, length: '', facility: local1, level: notice }]                                        | Configures global syslog servers                                                                                          |
 | haproxy_global_maxconn                  | 2000                                                                                                                                                                     | Sets the global maximum per-process number of concurrent connections                                                      |
@@ -30,14 +30,7 @@ Role Variables
 | haproxy_defaults_timeout_connect        | 5000                                                                                                                                                                     | Maximum time to wait for a connection attempt to a server to succeed                                                      |
 | haproxy_defaults_timeout_client         | 50000                                                                                                                                                                    | Maximum inactivity time on the client side                                                                                |
 | haproxy_defaults_timeout_server         | 50000                                                                                                                                                                    | Maximum inactivity time on the server side                                                                                |
-| haproxy_listen_section                  | false                                                                                                                                                                    | Enable or disable listen proxy section                                                                                    |
-| haproxy_listen_name                     | ''                                                                                                                                                                       | Sets name of listen proxy                                                                                                 |
-| haproxy_listen_bind                     | ''                                                                                                                                                                       | Sets listen bind address                                                                                                  |
-| haproxy_listen_balance_algorithm        | ''                                                                                                                                                                       | Sets listen balance algorithm                                                                                             |
-| haproxy_listen_balance_arguments        | ''                                                                                                                                                                       | Sets listen balance arguments                                                                                             |
-| haproxy_listen_mode                     | ''                                                                                                                                                                       | Sets listen mode                                                                                                          |
-| haproxy_listen_log                      | ''                                                                                                                                                                       | Sets listen log                                                                                                           |
-| haproxy_listen_servers                  | []                                                                                                                                                                       | Configures listen servers                                                                                                 |
+| haproxy_proxies                         | []                                                                                                                                                                       | List of proxies                                                                                                           |
 
 Dependencies
 ------------
@@ -63,21 +56,22 @@ Install older version of HAProxy
     - kbrebanov.haproxy
 ```
 
-Install HAProxy and configure listen proxy section
+Install HAProxy and configure a listen proxy
 ```
 - hosts: all
   vars:
-    haproxy_listen_section: true
-    haproxy_listen_name: "http-in"
-    haproxy_listen_bind: "0.0.0.0:80"
-    haproxy_listen_mode: "tcp"
-    haproxy_listen_balance_algorithm: "roundrobin"
-    haproxy_listen_log: "global"
-    haproxy_listen_servers:
-      - name: "server1"
-        address: "192.168.1.1:8080"
-      - name: "server2"
-        address: "172.16.32.44:9090"
+    haproxy_proxies:
+      - type: listen
+        name: "http-in"
+        bind: "0.0.0.0:80"
+        mode: "tcp"
+        balance_algorithm: "roundrobin"
+        log: "global"
+        servers:
+          - name: "server1"
+            address: "192.168.1.1:8080"
+          - name: "server2"
+            address: "172.16.32.44:9090"
   roles:
     - kbrebanov.haproxy
 ```

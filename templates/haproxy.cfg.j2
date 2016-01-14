@@ -49,25 +49,26 @@ defaults
         errorfile 503 {{ haproxy_defaults_errorfile_503 }}
         errorfile 504 {{ haproxy_defaults_errorfile_504 }}
 
-{% if haproxy_listen_section %}
-listen {{ haproxy_listen_name }}
-        bind {{ haproxy_listen_bind }}
-{% if haproxy_listen_balance_algorithm %}
-{% if haproxy_listen_balance_arguments %}
-        balance {{ haproxy_listen_balance_algorithm }} {{ haproxy_listen_balance_arguments }}
+{% for proxy in haproxy_proxies %}
+{{ proxy.type }} {{ proxy.name }}
+        bind {{ proxy.bind }}
+{% if proxy.balance_algorithm is defined and proxy.balance_algorithm %}
+{% if proxy.balance_arguments is defined and proxy.balance_arguments %}
+        balance {{ proxy.balance_algorithm }} {{ proxy.balance_arguments }}
 {% else %}
-        balance {{ haproxy_listen_balance_algorithm }}
+        balance {{ proxy.balance_algorithm }}
 {% endif %}
 {% endif %}
-{% if haproxy_listen_mode %}
-        mode {{ haproxy_listen_mode }}
+{% if proxy.mode is defined and proxy.mode %}
+        mode {{ proxy.mode }}
 {% endif %}
-{% if haproxy_listen_log %}
-        log {{ haproxy_listen_log }}
+{% if proxy.log is defined and proxy.log %}
+        log {{ proxy.log }}
 {% endif %}
-{% if haproxy_listen_servers %}
-{% for server in haproxy_listen_servers %}
+{% if proxy.servers is defined %}
+{% for server in proxy.servers %}
         server {{ server.name }} {{ server.address }}
 {% endfor %}
 {% endif %}
-{% endif %}
+
+{% endfor %}

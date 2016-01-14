@@ -1,7 +1,7 @@
 ---
 # defaults file for haproxy
 
-haproxy_version: 1.6.1
+haproxy_version: 1.6
 
 haproxy_global_daemon: true
 haproxy_global_log:
@@ -42,11 +42,4 @@ haproxy_defaults_timeout_connect: 5000
 haproxy_defaults_timeout_client: 50000
 haproxy_defaults_timeout_server: 50000
 
-haproxy_listen_section: false
-haproxy_listen_name: ''
-haproxy_listen_bind: ''
-haproxy_listen_balance_algorithm: ''
-haproxy_listen_balance_arguments: ''
-haproxy_listen_mode: ''
-haproxy_listen_log: ''
-haproxy_listen_servers: []
+haproxy_proxies: []
