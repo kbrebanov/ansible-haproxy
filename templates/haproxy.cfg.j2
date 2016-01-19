@@ -65,9 +65,23 @@ defaults
 {% if proxy.log is defined and proxy.log %}
         log {{ proxy.log }}
 {% endif %}
+{% if proxy.acls is defined and proxy.acls %}
+{% for acl in proxy.acls %}
+        acl {{ acl.name }} {{ acl.definition }}
+{% endfor %}
+{% endif %}
+{% if proxy.use_servers is defined and proxy.use_servers %}
+{% for use_server in proxy.use_servers %}
+        use-server {{ use_server.name }} {{ use_server.condition }} {{ use_server.acl_name }}
+{% endfor %}
+{% endif %}
 {% if proxy.servers is defined %}
 {% for server in proxy.servers %}
+{% if server.weight is defined %}
+        server {{ server.name }} {{ server.address }} weight {{ server.weight }}
+{% else %}
         server {{ server.name }} {{ server.address }}
+{% endif %}
 {% endfor %}
 {% endif %}
 
