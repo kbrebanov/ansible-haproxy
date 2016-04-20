@@ -41,14 +41,14 @@ Example Playbook
 ----------------
 
 Install HAProxy
-```
+```yaml
 - hosts: all
   roles:
     - kbrebanov.haproxy
 ```
 
 Install older version of HAProxy
-```
+```yaml
 - hosts: all
   vars:
     haproxy_version: 1.5.14
@@ -57,7 +57,7 @@ Install older version of HAProxy
 ```
 
 Install HAProxy and configure a listen proxy
-```
+```yaml
 - hosts: all
   vars:
     haproxy_proxies:
