@@ -1,7 +1,7 @@
 haproxy
 =======
 
-[![Ansible Role](https://img.shields.io/ansible/role/5700.svg)](https://galaxy.ansible.com/list#/roles/5700)
+[![Build Status](https://travis-ci.org/kbrebanov/ansible-haproxy.svg?branch=master)](https://travis-ci.org/kbrebanov/ansible-haproxy)
 
 Installs and configures HAProxy
 
