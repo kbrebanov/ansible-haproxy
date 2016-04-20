@@ -8,13 +8,13 @@ Installs and configures HAProxy
 Requirements
 ------------
 
-This role requires Ansible 1.8 or higher.
+This role requires Ansible 1.9 or higher.
 
 Role Variables
 --------------
 
 | Name                                    | Default                                                                                                                                                                  | Description                                                                                                               |
-|-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
+|:----------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------|
 | haproxy_version                         | 1.6                                                                                                                                                                      | Version of HAProxy to install                                                                                             |
 | haproxy_global_daemon                   | true                                                                                                                                                                     | Makes the process fork in the background                                                                                  |
 | haproxy_global_log                      | [{address: /dev/log, length: '', facility: local0, level: ''}, {address: /dev/log, length: '', facility: local1, level: notice }]                                        | Configures global syslog servers                                                                                          |
