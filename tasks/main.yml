@@ -3,42 +3,51 @@
 
 - name: Include distribution specific variables
   include_vars: "{{ ansible_distribution }}.yml"
-  tags: haproxy
+  tags:
+    - haproxy
 
 - include: CentOS.yml
   when: ansible_distribution == "CentOS"
-  tags: haproxy
+  tags:
+    - haproxy
 
 - include: Ubuntu.yml
   when: ansible_distribution == "Ubuntu"
-  tags: haproxy
+  tags:
+    - haproxy
 
 - name: Create haproxy configuration file
-  template: >
-    src=haproxy.cfg.j2
-    dest=/etc/haproxy/haproxy.cfg
-    owner=root
-    group=root
-    mode=0644
-  notify: reload haproxy
-  tags: haproxy
+  become: yes
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload haproxy
+  tags:
+    - haproxy
 
 - name: Create error files directory
-  file: >
-    path=/etc/haproxy/errors
-    owner=root
-    group=root
-    mode=0755
-    state=directory
-  tags: haproxy
+  become: yes
+  file:
+    path: /etc/haproxy/errors
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+  tags:
+    - haproxy
 
 - name: Create error files
-  template: >
-    src={{ item }}.http.j2
-    dest=/etc/haproxy/errors/{{ item }}.http
-    owner=root
-    group=root
-    mode=0644
+  become: yes
+  template:
+    src: "{{ item }}.http.j2"
+    dest: /etc/haproxy/errors/{{ item }}.http
+    owner: root
+    group: root
+    mode: 0644
   with_items:
     - 400
     - 403
@@ -47,8 +56,14 @@
     - 502
     - 503
     - 504
-  tags: haproxy
+  tags:
+    - haproxy
 
 - name: Ensure HAProxy service is started and enabled on boot
-  service: name={{ haproxy_service_name }} state=started enabled=yes
-  tags: haproxy
+  become: yes
+  service:
+    name: "{{ haproxy_service_name }}"
+    state: started
+    enabled: yes
+  tags:
+    - haproxy

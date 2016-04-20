@@ -2,25 +2,37 @@
 # tasks file for haproxy (Ubuntu specific)
 
 - name: Install HAProxy PGP key
-  apt_key: >
-    keyserver=keyserver.ubuntu.com
-    id=CFFB779AADC995E4F350A060505D97A41C61B9CD
-    state=present
-  tags: haproxy
+  become: yes
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: CFFB779AADC995E4F350A060505D97A41C61B9CD
+    state: present
+  tags:
+    - haproxy
 
 - name: Add HAProxy 1.5 PPA
-  apt_repository: >
-    repo='ppa:vbernat/haproxy-1.5'
-    state=present
-  tags: haproxy
+  become: yes
+  apt_repository:
+    repo: 'ppa:vbernat/haproxy-1.5'
+    state: present
+  tags:
+    - haproxy
 
 - name: Add HAProxy 1.6 PPA
-  apt_repository: >
-    repo='ppa:vbernat/haproxy-1.6'
-    state=present
-  tags: haproxy
+  become: yes
+  apt_repository:
+    repo: 'ppa:vbernat/haproxy-1.6'
+    state: present
+  tags:
+    - haproxy
 
 - name: Install HAProxy packages
-  apt: name={{ item }} state=present update_cache=yes
-  with_items: haproxy_packages
-  tags: haproxy
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - "{{ haproxy_packages }}"
+  tags:
+    - haproxy

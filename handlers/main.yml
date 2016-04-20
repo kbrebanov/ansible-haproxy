@@ -2,9 +2,17 @@
 # handlers file for haproxy
 
 - name: restart haproxy
-  service: name={{ haproxy_service_name }} state=restarted
-  tags: haproxy
+  become: yes
+  service:
+    name: "{{ haproxy_service_name }}"
+    state: restarted
+  tags:
+    - haproxy
 
 - name: reload haproxy
-  service: name={{ haproxy_service_name }} state=reloaded
-  tags: haproxy
+  become: yes
+  service:
+    name: "{{ haproxy_service_name }}"
+    state: reloaded
+  tags:
+    - haproxy
